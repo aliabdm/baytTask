@@ -36,6 +36,16 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
+                        @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('youMayLike') }}">You May Like</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('content.index') }}">All Contents</a>
+                        </li>
+                        @endauth
+
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">

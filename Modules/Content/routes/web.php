@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Content\app\Http\Controllers\ContentController;
+use Modules\Content\app\Http\Controllers\ContentTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,9 @@ use Modules\Content\app\Http\Controllers\ContentController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('content', ContentController::class)->names('content');
-});
+Route::resource('content', ContentController::class)->names('content');
+Route::resource('content-types', ContentTypeController::class)->names('contentType');
+Route::get('you-may-like', [ContentController::class,'youMayLike'])->name('youMayLike')->middleware('auth');;
+Route::put('interact/{content_id}', [ContentController::class,'interact'])->name('interact')->middleware('auth');
+
+

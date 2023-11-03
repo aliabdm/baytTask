@@ -93,6 +93,8 @@ return [
         */
 
         'migration' => base_path('database/migrations'),
+
+
         /*
         |--------------------------------------------------------------------------
         | Generator path

@@ -2,19 +2,29 @@
 
 namespace Modules\Content\app\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Modules\Content\app\Http\Requests\ContentRequest;
+use Modules\Content\app\Models\ContentType;
+use Modules\Content\Repositories\ContentRepositories;
 
 class ContentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private $contentRepository;
+
+    public function __construct(ContentRepositories $contentRepo)
+    {
+        $this->contentRepository = $contentRepo;
+        $this->middleware('checkAdmin',['except' => ['index','show','youMayLike','interact']]);
+
+    }
     public function index()
     {
-        return view('content::index');
+        $contents = $this->contentRepository->paginateWithEagerRelation();
+        $viewBasedOnUser = $this->contentRepository->viewBasedOnUser();
+        return view('content::content.'.$viewBasedOnUser,compact("contents"));
     }
 
     /**
@@ -22,15 +32,18 @@ class ContentController extends Controller
      */
     public function create()
     {
-        return view('content::create');
+        $contentTypes = ContentType::all();
+        return view('content::content.create',compact("contentTypes"));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(ContentRequest $request)
     {
-        //
+        $this->contentRepository->create($request->all());
+        return redirect()->route('content.index');
+
     }
 
     /**
@@ -38,7 +51,8 @@ class ContentController extends Controller
      */
     public function show($id)
     {
-        return view('content::show');
+        $content = $this->contentRepository->find($id);
+        return view('content::content.show',compact("content"));
     }
 
     /**
@@ -46,15 +60,18 @@ class ContentController extends Controller
      */
     public function edit($id)
     {
-        return view('content::edit');
+        $content = $this->contentRepository->find($id);
+        $contentTypes = ContentType::all();
+        return view('content::content.edit',compact("content","contentTypes"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(ContentRequest $request, $id)
     {
-        //
+        $this->contentRepository->update($request->all(),$id);
+        return redirect()->route('content.index');
     }
 
     /**
@@ -62,6 +79,19 @@ class ContentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->contentRepository->delete($id);
+        return redirect()->route('content.index');
     }
+
+    public function youMayLike()
+    {
+        $contents = $this->contentRepository->youMayLike();
+        return view('content::content.you-may-like',compact("contents"));
+    }
+
+    public function interact($content_id,Request $request)
+    {
+        return $this->contentRepository->interact($content_id,$request);
+    }
+
 }

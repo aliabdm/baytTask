@@ -3,17 +3,15 @@
 namespace Modules\Content\database\seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Content\app\Models\Content;
 
-class ContentDatabaseSeeder extends Seeder
+class ContentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $this->call([
-            ContentTypeSeeder::class,
-            ContentSeeder::class
-        ]);
+        Content::factory()->count(50)->create();
     }
 }

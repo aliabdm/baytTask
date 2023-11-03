@@ -20,8 +20,12 @@ class UserSeeder extends Seeder
     {
         User::factory()->count(2)->create();
         $user = User::find(1);
-        $user->email = "task@bayt.com";
+        $user->email = "admin@bayt.com";
         $user->is_admin = true;
+        $user->save();
+
+        $user = User::find(2);
+        $user->email = "user@bayt.com";
         $user->save();
     }
 

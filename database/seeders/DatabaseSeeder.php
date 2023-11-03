@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\Content\database\seeders\ContentDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,7 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             TruncateAllTables::class,
-            UserSeeder::class
+            UserSeeder::class,
+            ContentDatabaseSeeder::class
         ]);
     }
 }

@@ -7,13 +7,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    Reports
+                <a class="nav-link" href="{{ route('contentType.index') }}">
+                    Content Types
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    Users
+                <a class="nav-link" href="{{ route('content.index') }}">
+                    Content
                 </a>
             </li>
             <!-- Add more navigation links as needed -->
