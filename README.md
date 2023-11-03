@@ -4,10 +4,6 @@ example
 DB_DATABASE=bayt
 DB_USERNAME=root
 DB_PASSWORD=
-Set your api key
-GOOGLE_API_KEY
-set your app_url //example at local host http://127.0.0.1:8000
-app_url
 Install packages
 $ composer install
 $ npm install
