@@ -25,7 +25,7 @@
                                     <p class="card-text">{{ $content->text }}</p>
                                     @if (auth()->check())
                                     @php
-                                    $userLiked = auth()->user()->likes->count();
+                                    $userLiked = auth()->user()->likes->where('content_id',$content->id)->count();
                                     @endphp
                                     <button class="btn btn-primary like-button"
                                         style="{{ $userLiked ? 'display:none;' : '' }}">Like</button>
